@@ -1,13 +1,15 @@
-apply plugin: 'com.android.application'
-//apply plugin: 'kotlin-android'
+plugins {
+    alias(libs.plugins.android.application)
+}
 
 android {
-    compileSdkVersion 33
+    namespace 'com.jacky.launcher'
+    compileSdkVersion 36
 
     defaultConfig {
         applicationId "com.jacky.launcher"
-        minSdkVersion 17
-        targetSdkVersion 33
+        minSdk 21
+        targetSdk 36
         versionCode 21
         versionName "2.1"
     }
@@ -36,23 +38,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '36.0.0'
     ndkVersion '25.1.8937393'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //noinspection GradleCompatible
-    implementation 'com.android.support:support-v4:28.0.0'
-    //noinspection GradleCompatible
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    //noinspection GradleCompatible
-    implementation 'com.android.support:leanback-v17:28.0.0'
-    //noinspection GradleCompatible
-    implementation 'com.android.support:preference-leanback-v17:28.0.0'
+    implementation libs.core
+    implementation libs.core.ktx
+    implementation libs.support.appcompat
 
-    implementation 'fm.jiecao:jiecaovideoplayer:5.8.1'
-    implementation 'com.github.bumptech.glide:glide:4.14.2'
-
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation libs.androidx.leanback
+    implementation libs.androidx.leanback.preference
+    implementation libs.glide
+    implementation libs.kotlin.stdlib.jdk7
+    implementation libs.kotlin.stdlib.jdk8
 }

@@ -1,14 +1,16 @@
-package com.jacky.launcher.main;
+package com.jacky.launcher.detail;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v17.leanback.widget.ImageCardView;
-import android.support.v17.leanback.widget.Presenter;
+import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.leanback.widget.ImageCardView;
+import androidx.leanback.widget.Presenter;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jacky.launcher.R;
-import com.jacky.launcher.detail.MediaModel;
 
 /**
  * ImageCard Presenter
@@ -20,24 +22,24 @@ import com.jacky.launcher.detail.MediaModel;
 public class ImgCardPresenter extends Presenter {
 
     private Context mContext;
-    private int CARD_WIDTH = 313;
-    private int CARD_HEIGHT = 176;
+    private final int CARD_WIDTH = 313;
+    private final int CARD_HEIGHT = 176;
     private Drawable mDefaultCardImage;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         mContext = parent.getContext();
         mDefaultCardImage = mContext.getResources().getDrawable(R.drawable.pic_default);
-        ImageCardView cardView = new ImageCardView(mContext) {
+        ImageCardView cardView = new ImageCardView(mContext);
+        cardView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void setSelected(boolean selected) {
+            public void onFocusChange(View v, boolean hasFocus) {
                 int selected_background = mContext.getResources().getColor(R.color.detail_background);
                 int default_background = mContext.getResources().getColor(R.color.default_background);
-                int color = selected ? selected_background : default_background;
-                findViewById(R.id.info_field).setBackgroundColor(color);
-                super.setSelected(selected);
+                int color = hasFocus ? selected_background : default_background;
+                cardView.setInfoAreaBackgroundColor(color);
             }
-        };
+        });
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
         return new ViewHolder(cardView);
@@ -51,10 +53,7 @@ public class ImgCardPresenter extends Presenter {
             MediaModel mediaModel = (MediaModel) item;
             cardView.setTitleText(mediaModel.getTitle());
             cardView.setContentText(mediaModel.getContent());
-            Glide.with(cardView.getMainImageView().getContext())
-                    .load(mediaModel.getImageUrl())
-                    .crossFade()
-                    .into(cardView.getMainImageView());
+            Glide.with(cardView.getMainImageView().getContext()).load(mediaModel.getImageUrl()).error(mDefaultCardImage).transition(DrawableTransitionOptions.withCrossFade()).into(cardView.getMainImageView());
         }
     }
 

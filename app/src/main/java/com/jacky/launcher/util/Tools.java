@@ -29,10 +29,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Tools {
-    private static String TAG = "Tools";
+    private static final String TAG = "Tools";
 
-    private final static String[] hexDigits = {"0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+    private final static String[] hexDigits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
     private Tools() throws InstantiationException {
         throw new InstantiationException("This class is not created for instantiaation");
@@ -48,8 +47,7 @@ public final class Tools {
 
     private static String byteToHexString(byte b) {
         int n = b;
-        if (n < 0)
-            n = 256 + n;
+        if (n < 0) n = 256 + n;
         int d1 = n / 16;
         int d2 = n % 16;
         return hexDigits[d1] + hexDigits[d2];
@@ -60,8 +58,7 @@ public final class Tools {
      * @return
      */
     public static boolean isMobileNO(String mobiles) {
-        Pattern p = Pattern
-                .compile("^((13[0-9])|(15[^4,\\D])|(18[0,1,3,5-9]))\\d{8}$");
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,1,3,5-9]))\\d{8}$");
         Matcher m = p.matcher(mobiles);
         System.out.println(m.matches() + "-telnum-");
         return m.matches();
@@ -94,8 +91,7 @@ public final class Tools {
      * @return
      */
     public static boolean isValidEmail(String email) {
-        Pattern p = Pattern
-                .compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
+        Pattern p = Pattern.compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
         Matcher m = p.matcher(email);
         System.out.println(m.matches() + "-email-");
         return m.matches();
@@ -139,11 +135,7 @@ public final class Tools {
      */
     public static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
+        return state.equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
@@ -184,8 +176,7 @@ public final class Tools {
      * @return
      */
     public static String getImeiCode(Context context) {
-        TelephonyManager tm = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
     }
 
@@ -208,13 +199,11 @@ public final class Tools {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight
-                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
 
-    public static PackageInfo getAPKVersionInfo(Context context,
-                                                String packageName) {
+    public static PackageInfo getAPKVersionInfo(Context context, String packageName) {
         PackageManager packageManager = context.getPackageManager();
         PackageInfo packInfo = null;
         try {

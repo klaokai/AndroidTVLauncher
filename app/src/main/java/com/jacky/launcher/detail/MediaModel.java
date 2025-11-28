@@ -135,8 +135,8 @@ public class MediaModel implements Parcelable {
         };
 
         String urls[] = {
-                "http://tupian.enterdesk.com/2012/0528/gha/9/120523112107-15.jpg",
-                "http://imgstore.cdn.sogou.com/app/a/100540002/541762.jpg",
+                "https://se-feed-bucket.bj.bcebos.com/produce-record2624331/8ac8b0f68ae395330d678fcf961bf6a1.png.jpg",
+                "https://se-feed-bucket.bj.bcebos.com/produce-record2310394/2aa2b422f64d9e12f52bc828f63f1f20.jpg",
                 "http://www.bz55.com/uploads/allimg/140729/138-140H9144A7.jpg",
                 "http://imgstore.cdn.sogou.com/app/a/100540002/717240.jpg",
                 "http://e.hiphotos.baidu.com/zhidao/pic/item/5ab5c9ea15ce36d3418e754838f33a87e850b1c4.jpg",

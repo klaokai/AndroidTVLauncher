@@ -1,0 +1,20 @@
+[versions]
+agp = "8.13.1"
+core = "1.13.1"
+appcompat = "1.7.1"
+leanback = "1.2.0"
+glide = "5.0.5"
+kotlin_version = "1.8.22"
+
+[libraries]
+androidx-leanback = { group = "androidx.leanback", name = "leanback", version.ref = "leanback" }
+androidx-leanback-preference = { group = "androidx.leanback", name = "leanback-preference", version.ref = "leanback" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+support-appcompat = { module = "androidx.appcompat:appcompat", name = "appcompat", version.ref = "appcompat" }
+core = { module = "androidx.core:core", name = "core", version.ref = "core" }
+core-ktx = { module = "androidx.core:core", name = "core-ktx", version.ref = "core" }
+kotlin-stdlib-jdk7 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", name = "core-ktx", version.ref = "kotlin_version" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", name = "core-ktx", version.ref = "kotlin_version" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
