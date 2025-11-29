@@ -10,6 +10,7 @@ import androidx.leanback.widget.ImageCardView;
 import androidx.leanback.widget.Presenter;
 
 import com.jacky.launcher.R;
+import com.jacky.launcher.style.SelectedImageCardView;
 
 /**
  * ImageCard Presenter
@@ -27,16 +28,7 @@ public class FunctionCardPresenter extends Presenter {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         mContext = parent.getContext();
-        ImageCardView cardView = new ImageCardView(mContext);
-        cardView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                int selected_background = mContext.getResources().getColor(R.color.detail_background);
-                int default_background = mContext.getResources().getColor(R.color.default_background);
-                int color = hasFocus ? selected_background : default_background;
-                cardView.setInfoAreaBackgroundColor(color);
-            }
-        });
+        ImageCardView cardView = new SelectedImageCardView(mContext);
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
         return new ViewHolder(cardView);

@@ -1,11 +1,33 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@style/Theme.Leanback">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="imageCardViewStyle">@style/CustomImageCardViewStyle</item>
+        <item name="imageCardViewInfoAreaStyle">@style/ImageCardViewColoredInfoArea</item>
+        <item name="imageCardViewTitleStyle">@style/ImageCardViewColoredTitle</item>
     </style>
 
+    <style name="CustomImageCardViewStyle" parent="Widget.Leanback.ImageCardViewStyle">
+        <item name="cardType">infoUnderWithExtra</item>
+        <item name="cardBackground">@color/white</item>
+        <item name="infoVisibility">always</item>
+        <item name="lbImageCardViewType">Title|Content</item>
+        <item name="infoAreaBackground">@null</item>
+    </style>
+    <style name="ImageCardViewColoredInfoArea" parent="Widget.Leanback.ImageCardView.InfoAreaStyle">
+        <item name="android:background">@color/default_background</item>
+    </style>
+    <style name="ImageCardViewColoredTitleAppearance" parent="TextAppearance.Leanback.ImageCardView.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="ImageCardViewColoredTitle" parent="Widget.Leanback.ImageCardView.TitleStyle">
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">none</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/ImageCardViewColoredTitleAppearance</item>
+    </style>
 </resources>

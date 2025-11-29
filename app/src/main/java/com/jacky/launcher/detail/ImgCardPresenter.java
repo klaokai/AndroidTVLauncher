@@ -2,7 +2,6 @@ package com.jacky.launcher.detail;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.leanback.widget.ImageCardView;
@@ -11,6 +10,7 @@ import androidx.leanback.widget.Presenter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jacky.launcher.R;
+import com.jacky.launcher.style.SelectedImageCardView;
 
 /**
  * ImageCard Presenter
@@ -30,16 +30,7 @@ public class ImgCardPresenter extends Presenter {
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         mContext = parent.getContext();
         mDefaultCardImage = mContext.getResources().getDrawable(R.drawable.pic_default);
-        ImageCardView cardView = new ImageCardView(mContext);
-        cardView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                int selected_background = mContext.getResources().getColor(R.color.detail_background);
-                int default_background = mContext.getResources().getColor(R.color.default_background);
-                int color = hasFocus ? selected_background : default_background;
-                cardView.setInfoAreaBackgroundColor(color);
-            }
-        });
+        ImageCardView cardView = new SelectedImageCardView(mContext);
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
         return new ViewHolder(cardView);

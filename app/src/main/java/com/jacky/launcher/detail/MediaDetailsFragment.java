@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.DetailsSupportFragment;
 import androidx.leanback.widget.Action;
@@ -28,6 +30,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.jacky.launcher.R;
 
 /**
  * @author jacky
@@ -38,7 +41,6 @@ public class MediaDetailsFragment extends DetailsSupportFragment {
 
     private ArrayObjectAdapter mRowsAdapter;
     private MediaModel mMediaModel;
-    private Context mContext;
     private static final int ACTION_WATCH_TRAILER = 1;
 
     private BackgroundManager mBackgroundManager;
@@ -48,18 +50,17 @@ public class MediaDetailsFragment extends DetailsSupportFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mContext = getActivity();
         mMediaModel = getActivity().getIntent().getParcelableExtra(MediaDetailsActivity.MEDIA);
 
-        prepareBackgroundManager();
+        prepareBackgroundManager(getActivity());
         buildDetails();
     }
 
-    private void prepareBackgroundManager() {
-        mBackgroundManager = BackgroundManager.getInstance(getActivity());
-        mBackgroundManager.attach(getActivity().getWindow());
+    private void prepareBackgroundManager(FragmentActivity context) {
+        mBackgroundManager = BackgroundManager.getInstance(context);
+        mBackgroundManager.attach(context.getWindow());
         mMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
+        context.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
 
     private void buildDetails() {
@@ -79,7 +80,6 @@ public class MediaDetailsFragment extends DetailsSupportFragment {
         rowPresenter.setListener(sharedElementHelper);
         rowPresenter.setParticipatingEntranceTransition(true);
 
-
         final DetailsOverviewRow detailsOverview = new DetailsOverviewRow(mMediaModel);
         RequestManager context = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -87,7 +87,23 @@ public class MediaDetailsFragment extends DetailsSupportFragment {
         } else {
             context = Glide.with(getActivity());
         }
-        context.asBitmap().load(mMediaModel.getImageUrl()).listener(new RequestListener<Bitmap>() {
+        setImage(context, detailsOverview);
+
+        SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
+        // 如果是视频，则显示一个播放按钮
+        if (!mMediaModel.getVideoUrl().isEmpty()) {
+            adapter.set(ACTION_WATCH_TRAILER, new Action(ACTION_WATCH_TRAILER, "播放"));
+        }
+        detailsOverview.setActionsAdapter(adapter);
+        mRowsAdapter.add(detailsOverview);
+
+        setAdapter(mRowsAdapter);
+    }
+
+    private void setImage(RequestManager context, DetailsOverviewRow detailsOverview) {
+        context.asBitmap().load(mMediaModel.getImageUrl())
+                .error(ContextCompat.getDrawable(getContext(), R.drawable.default_background))
+                .listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 // 处理加载失败的情况
@@ -103,26 +119,9 @@ public class MediaDetailsFragment extends DetailsSupportFragment {
             }
         }).into(new SimpleTarget<Bitmap>(mMetrics.widthPixels, mMetrics.heightPixels) {
             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                detailsOverview.setImageBitmap(mContext, resource);
-            }
-        });
-
-        updateBackground(mMediaModel.getImageUrl());
-
-        SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
-        if (!mMediaModel.getVideoUrl().isEmpty()) {
-            adapter.set(ACTION_WATCH_TRAILER, new Action(ACTION_WATCH_TRAILER, "播放"));
-        }
-        detailsOverview.setActionsAdapter(adapter);
-        mRowsAdapter.add(detailsOverview);
-
-        setAdapter(mRowsAdapter);
-    }
-
-    private void updateBackground(String uri) {
-        Glide.with(this).asBitmap().load(uri).centerCrop().into(new SimpleTarget<Bitmap>(mMetrics.widthPixels, mMetrics.heightPixels) {
-            @Override
-            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> glideAnimation) {
+                // 更新每个详情里面的图片
+                detailsOverview.setImageBitmap(getContext(), resource);
+                // 更新背景
                 mBackgroundManager.setBitmap(resource);
             }
         });

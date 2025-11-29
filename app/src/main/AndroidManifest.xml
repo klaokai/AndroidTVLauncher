@@ -7,14 +7,19 @@
     <uses-permission
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature
         android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
         android:required="false" />
 
     <application
@@ -22,21 +27,27 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.jacky.launcher.main.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true"
-            android:theme="@style/Theme.Leanback">
+            android:banner="@drawable/app_icon_your_company"
+            android:logo="@drawable/app_icon_your_company"
+            android:icon="@drawable/app_icon_your_company"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.jacky.launcher.app.AppUninstall" />
+        <activity
+            android:name="com.jacky.launcher.app.AppUninstall"
+            android:exported="false" />
         <activity
             android:name="com.jacky.launcher.detail.MediaDetailsActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Leanback" />
+            android:exported="false" />
     </application>
 
 </manifest>

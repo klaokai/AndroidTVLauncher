@@ -51,8 +51,6 @@ public class MainFragment extends BrowseSupportFragment {
     private static final String TAG = "MainFragment";
 
     private static final int BACKGROUND_UPDATE_DELAY = 300;
-    private static final int GRID_ITEM_WIDTH = 200;
-    private static final int GRID_ITEM_HEIGHT = 200;
 
     /**
      * 每一行数据的适配器
@@ -155,14 +153,15 @@ public class MainFragment extends BrowseSupportFragment {
      */
     private void prepareBackgroundManager() {
         // 获取当前背景管理器实例并将其绑定到当前活动的窗口
-        mBackgroundManager = BackgroundManager.getInstance(requireActivity());
-        mBackgroundManager.attach(getActivity().getWindow());
+        FragmentActivity context = requireActivity();
+        mBackgroundManager = BackgroundManager.getInstance(context);
+        mBackgroundManager.attach(context.getWindow());
 
         // 从资源文件中加载默认背景图片
-        mDefaultBackground = ContextCompat.getDrawable(getActivity(), R.drawable.default_background);
+        mDefaultBackground = ContextCompat.getDrawable(context, R.drawable.default_background);
         // 获取显示器的尺寸指标信息，用于后续可能界面布局和适配
         mMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
+        context.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
 
     /**
@@ -220,12 +219,13 @@ public class MainFragment extends BrowseSupportFragment {
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            FragmentActivity mContext = MainFragment.this.getActivity();
+            FragmentActivity mContext = MainFragment.this.requireActivity();
             if (item instanceof MediaModel) {
                 MediaModel mediaModel = (MediaModel) item;
                 Intent intent = new Intent(mContext, MediaDetailsActivity.class);
                 intent.putExtra(MediaDetailsActivity.MEDIA, mediaModel);
 
+                assert ((ImageCardView) itemViewHolder.view).getMainImageView() != null;
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, ((ImageCardView) itemViewHolder.view).getMainImageView(), MediaDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
                 startActivity(intent, bundle);
             } else if (item instanceof AppModel) {
