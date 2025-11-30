@@ -22,6 +22,8 @@ public class SelectedImageCardView extends ImageCardView {
 
     public SelectedImageCardView(@NonNull Context context) {
         super(context);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
         setOnFocusChangeListener(onFocusChangeListener);
     }
 

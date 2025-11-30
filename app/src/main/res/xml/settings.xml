@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_title_settings">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_recommendations"
+            android:title="@string/pref_title_recommendations" />
+    </PreferenceCategory>
+    <Preference
+        android:key="@string/pref_key_login"
+        android:title="@string/pref_title_login" />
+    <PreferenceCategory android:title="关于">
+        <Preference
+            android:key="version"
+            android:summary="v1.0.0"
+            android:title="版本信息" />
+        <Preference
+            android:key="privacy_policy"
+            android:title="隐私政策" />
+    </PreferenceCategory>
+</PreferenceScreen>

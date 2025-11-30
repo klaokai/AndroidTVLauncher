@@ -35,6 +35,7 @@
             android:banner="@drawable/app_icon_your_company"
             android:logo="@drawable/app_icon_your_company"
             android:icon="@drawable/app_icon_your_company"
+            android:theme="@style/AppCompatTheme"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +49,13 @@
         <activity
             android:name="com.jacky.launcher.detail.MediaDetailsActivity"
             android:exported="false" />
+        <activity android:name=".ui.OnboardingActivity"
+            android:enabled="true"
+            android:exported="false"
+            android:theme="@style/Theme.Leanback.Onboarding" />
+        <activity android:name=".ui.SettingsActivity"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.jacky.launcher.R;
 import com.jacky.launcher.app.AppUninstall;
+import com.jacky.launcher.ui.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,13 @@ public class FunctionModel {
 
         functionModels.add(appUninstall);
 
+
+        FunctionModel appSettings = new FunctionModel();
+        appSettings.setName("设置");
+        appSettings.setIcon(R.drawable.ic_settings_foreground);
+        appSettings.setIntent(new Intent(context, SettingsActivity.class));
+
+        functionModels.add(appSettings);
         return functionModels;
     }
 }

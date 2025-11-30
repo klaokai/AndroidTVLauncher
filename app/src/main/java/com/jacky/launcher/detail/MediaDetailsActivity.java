@@ -1,9 +1,8 @@
 package com.jacky.launcher.detail;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.jacky.launcher.R;
 
@@ -12,7 +11,7 @@ import com.jacky.launcher.R;
  * @version v1.0
  * @since 16/8/28
  */
-public class MediaDetailsActivity extends FragmentActivity {
+public class MediaDetailsActivity extends AppCompatActivity {
 
     public static final String MEDIA = "Media";
     public static final String SHARED_ELEMENT_NAME = "hero";
@@ -22,9 +21,7 @@ public class MediaDetailsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.details_fragment, new MediaDetailsFragment())
-                    .commitNow();
+            getSupportFragmentManager().beginTransaction().replace(R.id.details_fragment, new MediaDetailsFragment()).commitNow();
         }
     }
 }

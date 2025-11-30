@@ -26,6 +26,7 @@ import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.OnItemViewClickedListener;
 import androidx.leanback.widget.OnItemViewSelectedListener;
 import androidx.leanback.widget.Presenter;
+import androidx.leanback.widget.PresenterSelector;
 import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
 
@@ -36,11 +37,11 @@ import com.jacky.launcher.R;
 import com.jacky.launcher.app.AppCardPresenter;
 import com.jacky.launcher.app.AppDataManage;
 import com.jacky.launcher.app.AppModel;
+import com.jacky.launcher.detail.ImgCardPresenter;
 import com.jacky.launcher.detail.MediaDetailsActivity;
 import com.jacky.launcher.detail.MediaModel;
 import com.jacky.launcher.function.FunctionCardPresenter;
 import com.jacky.launcher.function.FunctionModel;
-import com.jacky.launcher.detail.ImgCardPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ import java.util.TimerTask;
 
 public class MainFragment extends BrowseSupportFragment {
     private static final String TAG = "MainFragment";
+
+    private static final int SETTINGS_ACTION_ID = 1;
 
     private static final int BACKGROUND_UPDATE_DELAY = 300;
 
@@ -75,6 +78,8 @@ public class MainFragment extends BrowseSupportFragment {
         loadRows();
 
         setupEventListeners();
+
+        // prepareEntranceTransition();
     }
 
     @Override
@@ -169,11 +174,18 @@ public class MainFragment extends BrowseSupportFragment {
      */
     private void setupUIElements() {
         setTitle(getString(R.string.app_name));
-        setHeadersState(HEADERS_DISABLED);
+        setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
         setBrandColor(ContextCompat.getColor(requireActivity(), R.color.fastlane_background));
         setSearchAffordanceColor(ContextCompat.getColor(requireActivity(), R.color.search_opaque));
+        setHeaderPresenterSelector(new PresenterSelector() {
+            @Override
+            public Presenter getPresenter(Object o) {
+                return new IconHeaderItemPresenter();
+            }
+        });
     }
+
 
     private void setupEventListeners() {
         setOnSearchClickedListener(new View.OnClickListener() {
@@ -248,7 +260,7 @@ public class MainFragment extends BrowseSupportFragment {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
             if (item instanceof MediaModel) {
-                FragmentActivity mContext = MainFragment.this.getActivity();
+                FragmentActivity mContext = MainFragment.this.requireActivity();
                 MediaModel mediaModel = (MediaModel) item;
                 int width = mMetrics.widthPixels;
                 int height = mMetrics.heightPixels;

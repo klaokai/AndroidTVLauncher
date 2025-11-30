@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/Theme.Leanback">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Leanback">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,8 +9,13 @@
         <item name="imageCardViewStyle">@style/CustomImageCardViewStyle</item>
         <item name="imageCardViewInfoAreaStyle">@style/ImageCardViewColoredInfoArea</item>
         <item name="imageCardViewTitleStyle">@style/ImageCardViewColoredTitle</item>
+        <item name="android:windowIsTranslucent">true</item>
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
     </style>
+    <style name="AppCompatTheme" parent="AppTheme">
+        <!-- 自定义属性 -->
 
+    </style>
     <style name="CustomImageCardViewStyle" parent="Widget.Leanback.ImageCardViewStyle">
         <item name="cardType">infoUnderWithExtra</item>
         <item name="cardBackground">@color/white</item>
@@ -30,4 +35,19 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/ImageCardViewColoredTitleAppearance</item>
     </style>
+
+    <style name="Widget.Example.Leanback.GuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
+        <item name="android:background">@color/icon_background</item>
+    </style>
+    <style name="Theme.Example.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
+        <item name="guidanceIconStyle">@style/Widget.Example.Leanback.GuidanceIconStyle</item>
+    </style>
+    <style name="Theme.Example.Leanback.GuidedStep.First">
+        <item name="guidanceIconStyle">@style/Widget.Example.Leanback.FirstStepGuidanceIconStyle
+        </item>
+    </style>
+    <style name="Widget.Example.Leanback.FirstStepGuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
+        <item name="android:background">@color/icon_alt_background</item>
+    </style>
+
 </resources>

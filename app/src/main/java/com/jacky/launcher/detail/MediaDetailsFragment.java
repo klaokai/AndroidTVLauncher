@@ -1,6 +1,5 @@
 package com.jacky.launcher.detail;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +30,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.jacky.launcher.R;
+
+import java.util.Objects;
 
 /**
  * @author jacky
@@ -73,19 +74,17 @@ public class MediaDetailsFragment extends DetailsSupportFragment {
         mRowsAdapter = new ArrayObjectAdapter(selector);
 
         // Hook up transition element.
-        FullWidthDetailsOverviewSharedElementHelper sharedElementHelper =
-                new FullWidthDetailsOverviewSharedElementHelper();
-        sharedElementHelper.setSharedElementEnterTransition(
-                getActivity(), MediaDetailsActivity.SHARED_ELEMENT_NAME);
+        FullWidthDetailsOverviewSharedElementHelper sharedElementHelper = new FullWidthDetailsOverviewSharedElementHelper();
+        sharedElementHelper.setSharedElementEnterTransition(getActivity(), MediaDetailsActivity.SHARED_ELEMENT_NAME);
         rowPresenter.setListener(sharedElementHelper);
         rowPresenter.setParticipatingEntranceTransition(true);
 
         final DetailsOverviewRow detailsOverview = new DetailsOverviewRow(mMediaModel);
         RequestManager context = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context = Glide.with(getContext());
+            context = Glide.with(Objects.requireNonNull(getContext()));
         } else {
-            context = Glide.with(getActivity());
+            context = Glide.with(requireActivity());
         }
         setImage(context, detailsOverview);
 
@@ -101,9 +100,7 @@ public class MediaDetailsFragment extends DetailsSupportFragment {
     }
 
     private void setImage(RequestManager context, DetailsOverviewRow detailsOverview) {
-        context.asBitmap().load(mMediaModel.getImageUrl())
-                .error(ContextCompat.getDrawable(getContext(), R.drawable.default_background))
-                .listener(new RequestListener<Bitmap>() {
+        context.asBitmap().load(mMediaModel.getImageUrl()).error(ContextCompat.getDrawable(getContext(), R.drawable.default_background)).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 // 处理加载失败的情况
